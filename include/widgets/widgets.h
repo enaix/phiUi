@@ -6,6 +6,7 @@
 #define PHIUI_WIDGETS_H
 
 #include "common/common.h"
+#include "common/containers.h"
 
 namespace phi
 {
@@ -15,36 +16,39 @@ namespace phi
     class Widget : public Base
     {
     public:
-        Widget(Screen* parent, Point pos, Size size, Flag extra_flags);
+        Widget(Screen* parent, Point pos, Size size, Flag extra_flags, Flag size_flags);
 
         Screen* parent;
         Point pos;
         Size size;  // TODO implement size policy
         Size bg_size;
-        ui8 margin;
+        Margin margin;
         // Flags flags;  <- they are in the derived class
-    };
-
-    class Spacer : public Base
-    {
-    public:
-        Spacer() : Base() {};
-        Flag flags = Flag(WidgetFlags::Hidden) | Flag(WidgetFlags::Spacer);
+        Flag size_flags;
     };
 
     class Screen : public Widget
     {
     public:
-        Screen();
+        Screen(Screen* parent, Point pos, Size size, Flag extra_flags, Flag extra_size_policy, Flag extra_screen_flags,
+               Flag screen_policy);
         ~Screen();
         void (*init)();
-        void (*die)();
+        void compute_widget_sizes();
 
-        Base* widgets;
+        Array<Base*> widgets;
         Selector select;
         Flag screen_flags;
         Flag screen_policy;
         ui8 padding;
+    protected:
+        void _constraint_process(bool is_vertical);
+    };
+
+    class Wrapper : public Screen
+    {
+    public:
+        Wrapper();
     };
 
 } // phi
