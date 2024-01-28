@@ -23,17 +23,17 @@ namespace phi
     typedef ui16 st;  // size_t
 
 #ifdef INCREASE_WIDGETS_LIMIT
-    typedef ui16 Selector  // 65536 elements is maximum
+    typedef ui16 Selector;  // 65536 elements is maximum
 #else
     typedef ui8 Selector;  // 256 elements is maximum
 #endif
 
 #ifdef INCREASE_MARGIN_LIMIT
     typedef ui16 ms;  // 65536 units max (4*2=8 bytes for each widget)
-    #define margin_auto 65535;
+    #define margin_auto 65535
 #else
     typedef ui8 ms;  // 256 units max (4 bytes for each widget)
-    #define margin_auto 255;
+    #define margin_auto 255
 #endif
 
     struct Point
@@ -57,6 +57,9 @@ namespace phi
         ms bottom;
     };
 
+    // Set an alias to padding
+    typedef Margin Padding;
+
     enum class WidgetFlags : Flag
     {
         Disabled = 0b1,  // Cannot select widget, is rendered differently
@@ -72,9 +75,10 @@ namespace phi
         HExpanding = 0b100,  // The widget takes all horizontal space
         AlignLeft = 0b1000,  // Align to the left, ignore position
         AlignRight = 0b10000,  // Align to the right, ignore position
-        AlignCenter = 0b100000,  // Align to the center, ignore position
-        AlignTop = 0b1000000,  // Align to the top, ignore position
-        AlignBottom = 0b10000000,  // Align to the bottom, ignore position
+        AlignTop = 0b100000,  // Align to the top, ignore position
+        AlignBottom = 0b1000000,  // Align to the bottom, ignore position
+        AlignVCenter = AlignTop | AlignBottom,  // Align to the vertical center
+        AlignHCenter = AlignLeft | AlignRight,  // Align to the horizontal center
     };
 
     enum class ScreenFlags : Flag

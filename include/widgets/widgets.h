@@ -40,9 +40,10 @@ namespace phi
         Selector select;
         Flag screen_flags;
         Flag screen_policy;
-        ui8 padding;
+        Padding padding;
     protected:
         void _constraint_process(bool is_vertical);
+        ui16 _margin_process(Widget* wid, Point topleft, Point bottomright, bool vertical, bool& expanding);
     };
 
     class Wrapper : public Screen
