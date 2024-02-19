@@ -49,6 +49,7 @@ namespace phi
     };
 
     // Maximum value of margin is treated as auto
+    // Auto margin can only be applied to both left+right or top+bottom
     struct Margin
     {
         ms left;

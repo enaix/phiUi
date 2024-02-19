@@ -89,21 +89,73 @@ namespace phi
 
     ui16 Screen::_margin_process(Widget* wid, Point topleft, Point bottomright, bool vertical, bool& expanding)
     {
-        if (wid->margin.top == margin_auto && wid->margin.bottom == margin_auto && !vertical)
+        // This function calculates widget position and size based on its margin and align in the given rectangle
+        // We return the size taken by the widget
+
+        if (!vertical && (wid->margin.top == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignVCenter)))
         {
-            // Center
-            // TODO calculate center
+            // Center (vertical in HBox)
+            i16 wid_pos = wid->margin.top + padding.top;
+            ui16 wid_size, max_size = bottomright.y - topleft.y - wid->margin.bottom - padding.bottom - wid_pos;
+            if (has_flag(wid->size_flags, SizeFlags::VExpanding))
+            {
+                wid_size = max_size;
+                wid->size.height = wid_size;
+            }
+            else
+            {
+                wid_size = wid->size.height;
+                wid_pos += (max_size - wid_size) / 2;
+                // TODO perhaps we need align here
+            }
+            wid->pos.y = wid_pos;
         }
 
-        // same for other align options
+        // Perhaps this should be in a separate macro function
+        else if (vertical && (wid->margin.left == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignHCenter)))
+        {
+            // Center (horizontal in VBox)
+            i16 wid_pos = wid->margin.left + padding.left;
+            ui16 wid_size, max_size = bottomright.x - topleft.x - wid->margin.right - padding.right - wid_pos;
+            if (expanding)
+            {
+                wid_size = max_size;
+                wid->size.height = wid_size;
+            }
+            else
+            {
+                wid_size = wid->size.width;
+                wid_pos += (max_size - wid_size) / 2;
+                // TODO ditto
+            }
+            wid->pos.y = wid_pos;
+        }
 
-        if ((wid->margin.top == margin_auto || wid->margin.bottom == margin_auto) && vertical ||
-                (wid->margin.left == margin_auto || wid->margin.right == margin_auto) && !vertical)
+        // Here we handle regular margin options
+        if (wid->margin.top != margin_auto)
+        {
+            i16 wid_pos = wid->margin.top + padding.top;
+            wid->pos.y = wid_pos;
+        }
+
+        if (wid->margin.left != margin_auto)
+        {
+            i16 wid_pos = wid->margin.left + padding.left;
+            wid->pos.x = wid_pos;
+        }
+
+        // TODO manage right margin
+        // I guess we have to return the new total size
+
+        if (wid->margin.top == margin_auto && vertical || wid->margin.left == margin_auto && !vertical)
         {
             // We need to calculate margin in the end
             expanding = true;
             return 0;
         }
+
+        if (vertical)
+            return wid->pos.y * 2 + wid->size.height;
     }
 
 } // phi
