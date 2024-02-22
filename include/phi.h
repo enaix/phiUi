@@ -11,9 +11,29 @@
 #error "MONO_U8G2_DISPLAY is unset. Please define the display type"
 #endif
 
+#define MONOCHROME // Set color to monochrome
+
 #include <U8g2lib.h>
 
-#endif  // MONO_U8G2
+#elif defined(DESKTOP)
+
+#ifndef DISPLAY_WIDTH
+#error "DISPLAY_WIDTH is unset. Please define display width to emulate"
+#endif
+
+#ifndef DISPLAY_HEIGHT
+#error "DISPLAY_HEIGHT is unset. Please define display width to emulate"
+#endif
+
+#include "renderer/desktop.h"
+
+#else
+
+#error "No framework has been selected. Please define renderer macro"
+
+#endif
+
+#include "common/common.h"
 
 namespace phi
 {
@@ -24,9 +44,16 @@ namespace phi
 #ifdef MONO_U8G2
         Phi(MONO_U8G2_DISPLAY display);
 #endif
-    protected:
+#ifdef DESKTOP
+        Phi();
+#endif
+
 #ifdef MONO_U8G2
         MONO_U8G2_DISPLAY u8g2;
+#endif
+
+#ifdef DESKTOP
+        Desktop renderer;
 #endif
     };
 

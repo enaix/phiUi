@@ -40,6 +40,12 @@ namespace phi
     {
         i16 x;
         i16 y;
+        Point& operator+=(const Point& rhs)
+        {
+            x += rhs.x;
+            y += rhs.y;
+            return *this;
+        }
     };
 
     struct Size
@@ -95,6 +101,18 @@ namespace phi
         Vertical,
         Horizontal,
         Grid
+    };
+
+    enum class RendererFlags : Flag
+    {
+
+    };
+
+    struct Color
+    {
+        #ifdef MONOCHROME
+        uint8_t color;
+        #endif
     };
 
     class Base

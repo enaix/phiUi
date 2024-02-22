@@ -11,4 +11,9 @@ namespace phi
     {}
 #endif
 
+#ifdef DESKTOP
+    Phi::Phi() : renderer({DISPLAY_WIDTH, DISPLAY_HEIGHT})
+    {}
+#endif
+
 } // phi

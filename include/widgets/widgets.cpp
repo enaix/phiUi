@@ -69,20 +69,25 @@ namespace phi
                We have both margin: auto and align
                Margin works by expanding, align is a hint and doesn't expand out of the limits */
 
-            if (has_flag(wid->size_flags, SizeFlags::VExpanding))
+            bool expanding = false;
+            ui16 wid_ts;
+
+            // TODO perhaps we should somehow calculate bottomright differently
+            if (is_vertical)
             {
-                if (is_vertical)
-                {
-                    expanding_wid++;
-                    // We need to handle the size and margin + padding later
-                }
-                else
-                {
-                    // The widget must fill the whole cell
-                    wid->pos.y = pos.y;
-                    wid->pos.x = total_size;
-                    // Calculate margin (margin: auto won't do anything here)
-                }
+                wid_ts = _margin_process(wid, {0, i16(total_size)}, {i16(size.width), i16(size.height)}, is_vertical,
+                                         expanding);
+            }
+            else
+            {
+                wid_ts = _margin_process(wid, {i16(total_size), 0}, {i16(size.width), i16(size.height)}, is_vertical,
+                                         expanding);
+            }
+
+            if (expanding)
+            {
+                expanding_wid++;
+                // We need to handle the size and margin + padding later
             }
         }
     }
@@ -91,6 +96,8 @@ namespace phi
     {
         // This function calculates widget position and size based on its margin and align in the given rectangle
         // We return the size taken by the widget
+
+        ui16 total_size = 0;
 
         if (!vertical && (wid->margin.top == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignVCenter)))
         {
@@ -136,16 +143,23 @@ namespace phi
         {
             i16 wid_pos = wid->margin.top + padding.top;
             wid->pos.y = wid_pos;
+
+            // TODO perhaps handle alignment here (or in a second pass)
+
+            if (vertical)
+                total_size += wid_pos + wid->size.height + wid->margin.bottom + padding.bottom;
         }
 
         if (wid->margin.left != margin_auto)
         {
             i16 wid_pos = wid->margin.left + padding.left;
             wid->pos.x = wid_pos;
+
+            if (!vertical)
+                total_size += wid_pos + wid->size.width + wid->margin.right + padding.right;
         }
 
-        // TODO manage right margin
-        // I guess we have to return the new total size
+        wid->pos += topleft;
 
         if (wid->margin.top == margin_auto && vertical || wid->margin.left == margin_auto && !vertical)
         {
@@ -154,8 +168,7 @@ namespace phi
             return 0;
         }
 
-        if (vertical)
-            return wid->pos.y * 2 + wid->size.height;
+        return total_size;
     }
 
 } // phi
