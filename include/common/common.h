@@ -5,6 +5,8 @@
 #ifndef PHIUI_COMMON_H
 #define PHIUI_COMMON_H
 
+#include "options.h"
+
 #include <cstdint>
 #include <climits>
 

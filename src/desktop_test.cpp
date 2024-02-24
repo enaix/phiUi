@@ -11,8 +11,12 @@ int main()
 {
     auto phi = phi::Phi();
 
-    phi.renderer.drawPixel({10, 10});
-    phi.renderer.render();
+    while(true)
+    {
+        phi.renderer.clear();
+        phi.renderer.drawPixel({10, 10});
+        phi.renderer.render();
+    }
 
     return 0;
 }

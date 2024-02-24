@@ -25,6 +25,12 @@ add_definitions(-DDISPLAY_WIDTH=128 -DDISPLAY_HEIGHT=64)
 # ===============
 
 # Setting up SDL2
-find_package(SDL2 REQUIRED)
-include_directories(phi_desktop ${SDL2_INCLUDE_DIRS})
-target_link_libraries(phi_desktop ${SDL2_LIBRARIES})
+find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
+find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
+
+if(TARGET SDL2::SDL2main)
+    target_link_libraries(phi_desktop PRIVATE SDL2::SDL2main)
+endif()
+
+#include_directories(phi_desktop ${SDL2_INCLUDE_DIRS})
+target_link_libraries(phi_desktop PRIVATE SDL2::SDL2)

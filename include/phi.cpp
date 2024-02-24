@@ -16,4 +16,12 @@ namespace phi
     {}
 #endif
 
+    void Phi::loop()
+    {
+#ifdef DESKTOP
+        renderer.clear();
+        // Call the skin to redraw
+        renderer.render();
+#endif
+    }
 } // phi

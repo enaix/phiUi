@@ -55,6 +55,7 @@ namespace phi
 #ifdef DESKTOP
         Desktop renderer;
 #endif
+        void loop();
     };
 
 } // phi
