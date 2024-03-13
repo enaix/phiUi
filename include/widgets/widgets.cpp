@@ -7,16 +7,17 @@
 namespace phi
 {
 
-    Widget::Widget(Screen* parent, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
+    Widget::Widget(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                    Flag size_flags = 0)
-    : Base(), parent(parent), pos(pos), size(size), size_flags(size_flags), margin({0, 0, 0, 0})
+    : Base(), parent(parent), pos(pos), size(size), size_flags(size_flags), margin({0, 0, 0, 0}),
+      size_hint(hint)
     {
         flags ^= extra_flags;
     }
 
-    Screen::Screen(Screen* parent, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
+    Screen::Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                    Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0)
-    : Widget(parent, pos, size, extra_flags), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
+    : Widget(parent, hint, pos, size, extra_flags), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
     screen_flags(extra_screen_flags), screen_policy(screen_policy)
     {
         size_flags = (Flag(SizeFlags::VExpanding) | Flag(SizeFlags::HExpanding)) ^ extra_size_flags;
@@ -33,10 +34,10 @@ namespace phi
         switch (ScreenPolicy(screen_policy))
         {
             case ScreenPolicy::Vertical:
-                _constraint_process(true);
+                _constraint_process<true>();
                 break;
             case ScreenPolicy::Horizontal:
-                _constraint_process(false);
+                _constraint_process<false>();
                 break;
             case ScreenPolicy::Grid:
                 break;
@@ -47,7 +48,8 @@ namespace phi
         }
     }
 
-    void Screen::_constraint_process(bool is_vertical)
+    template<bool is_vertical>
+    void Screen::_constraint_process()
     {
         ui16 total_size = 0;
 
@@ -73,7 +75,7 @@ namespace phi
             ui16 wid_ts;
 
             // TODO perhaps we should somehow calculate bottomright differently
-            if (is_vertical)
+            if constexpr(is_vertical)
             {
                 wid_ts = _margin_process(wid, {0, i16(total_size)}, {i16(size.width), i16(size.height)}, is_vertical,
                                          expanding);
@@ -92,14 +94,40 @@ namespace phi
         }
     }
 
-    ui16 Screen::_margin_process(Widget* wid, Point topleft, Point bottomright, bool vertical, bool& expanding)
+    template<bool is_vertical>
+    INLINE_SM ui16 Screen::_margin_process(Widget* wid, Point topleft, Point bottomright, bool& expanding)
     {
         // This function calculates widget position and size based on its margin and align in the given rectangle
         // We return the size taken by the widget
 
         ui16 total_size = 0;
 
-        if (!vertical && (wid->margin.top == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignVCenter)))
+        if constexpr(is_vertical)
+        {
+            // Topleft
+            i16 wid_pos_x = wid->margin.left + padding.left;
+            i16 wid_pos_y = wid->margin.top + padding.top + topleft.y;
+
+            if (!has_flag(wid->size_flags, SizeFlags::MinHeight))
+            {
+                // Widget height is relative to parent
+                wid->size.height = wid->size_hint.h * this->size.height / 12;
+                // TODO think about 12 as a constant
+            }
+
+            if (!has_flag(wid->size_flags, SizeFlags::MinWidth))
+            {
+                // Widget height is relative to parent
+                wid->size.width = wid->size_hint.w * this->size.width / 12;
+                // TODO think about 12 as a constant
+            }
+
+            // TODO calculate pos
+        }
+        // TODO do the same for horizontal, add padding: auto
+
+
+        if (!is_vertical && (wid->margin.top == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignVCenter)))
         {
             // Center (vertical in HBox)
             i16 wid_pos = wid->margin.top + padding.top;
@@ -119,7 +147,7 @@ namespace phi
         }
 
         // Perhaps this should be in a separate macro function
-        else if (vertical && (wid->margin.left == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignHCenter)))
+        else if (is_vertical && (wid->margin.left == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignHCenter)))
         {
             // Center (horizontal in VBox)
             i16 wid_pos = wid->margin.left + padding.left;
@@ -146,7 +174,7 @@ namespace phi
 
             // TODO perhaps handle alignment here (or in a second pass)
 
-            if (vertical)
+            if (is_vertical)
                 total_size += wid_pos + wid->size.height + wid->margin.bottom + padding.bottom;
         }
 
@@ -155,13 +183,13 @@ namespace phi
             i16 wid_pos = wid->margin.left + padding.left;
             wid->pos.x = wid_pos;
 
-            if (!vertical)
+            if (!is_vertical)
                 total_size += wid_pos + wid->size.width + wid->margin.right + padding.right;
         }
 
         wid->pos += topleft;
 
-        if (wid->margin.top == margin_auto && vertical || wid->margin.left == margin_auto && !vertical)
+        if (wid->margin.top == margin_auto && is_vertical || wid->margin.left == margin_auto && !is_vertical)
         {
             // We need to calculate margin in the end
             expanding = true;

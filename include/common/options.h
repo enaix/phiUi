@@ -7,7 +7,8 @@
 
 // Defining default compilation options
 
-// Arrays memory parameters
+
+// ARRAYS MEMORY PARAMETERS
 // ========================
 
 // Default array growth multiplier
@@ -23,6 +24,15 @@
 // Large array preallocation size
 #ifndef ARRAY_PREALLOC_LARGE
 #define ARRAY_PREALLOC_LARGE 10
+#endif
+
+
+// INLINE METHODS PARAMS
+// =====================
+
+// Minimal flash size increase, high performance gain. Pass INLINE_SM_DISABLE flag to disable
+#ifndef INLINE_SM_DISABLE
+#define INLINE_SM inline
 #endif
 
 #endif //PHIUI_OPTIONS_H

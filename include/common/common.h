@@ -69,6 +69,12 @@ namespace phi
     // Set an alias to padding
     typedef Margin Padding;
 
+    struct SizeHint
+    {
+        ui8 w;
+        ui8 h;
+    };
+
     enum class WidgetFlags : Flag
     {
         Disabled = 0b1,  // Cannot select widget, is rendered differently
@@ -79,9 +85,9 @@ namespace phi
 
     enum class SizeFlags : Flag
     {
-        Fixed = 0b1,  // Set fixed widget size
-        VExpanding = 0b10,  // The widget takes all vertical space
-        HExpanding = 0b100,  // The widget takes all horizontal space
+        Fixed = 0b1,  // Set fixed widget position
+        MinWidth = 0b10,  // Fixed widget size
+        MinHeight = 0b100,  // ditto
         AlignLeft = 0b1000,  // Align to the left, ignore position
         AlignRight = 0b10000,  // Align to the right, ignore position
         AlignTop = 0b100000,  // Align to the top, ignore position
