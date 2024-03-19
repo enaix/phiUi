@@ -129,9 +129,9 @@ namespace phi
         // TODO perhaps add expanding padding
 
         if constexpr (is_vertical)
-            return wid->size.height;
+            return wid->size.height + wid->margin.bottom;
         else
-            return wid->size.width;
+            return wid->size.width + wid->margin.right;
 
 
     }
