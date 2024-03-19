@@ -20,10 +20,10 @@ namespace phi
     : Widget(parent, hint, pos, size, extra_flags), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
     screen_flags(extra_screen_flags), screen_policy(screen_policy)
     {
-        size_flags = (Flag(SizeFlags::VExpanding) | Flag(SizeFlags::HExpanding)) ^ extra_size_flags;
+        size_flags = extra_size_flags;
     }
 
-    void Screen::compute_widget_sizes()
+    void Screen::constraint()
     {
         if (widgets.size() == 0)
         {
@@ -53,8 +53,6 @@ namespace phi
     {
         ui16 total_size = 0;
 
-        st expanding_wid = 0;
-
         // In order to save memory, we iterate over the list twice O(2*n)
         for (st i = 0; i < widgets.size(); i++)
         {
@@ -77,20 +75,16 @@ namespace phi
             // TODO perhaps we should somehow calculate bottomright differently
             if constexpr(is_vertical)
             {
-                wid_ts = _margin_process(wid, {0, i16(total_size)}, {i16(size.width), i16(size.height)}, is_vertical,
+                wid_ts = _margin_process<true>(wid, {0, i16(total_size)}, {i16(size.width), i16(size.height)},
                                          expanding);
             }
             else
             {
-                wid_ts = _margin_process(wid, {i16(total_size), 0}, {i16(size.width), i16(size.height)}, is_vertical,
+                wid_ts = _margin_process<false>(wid, {i16(total_size), 0}, {i16(size.width), i16(size.height)},
                                          expanding);
             }
-
-            if (expanding)
-            {
-                expanding_wid++;
-                // We need to handle the size and margin + padding later
-            }
+            total_size += wid_ts;
+            // TODO process padding: auto and other expanding stuff
         }
     }
 
@@ -101,102 +95,45 @@ namespace phi
         // We return the size taken by the widget
 
         ui16 total_size = 0;
+        i16 wid_pos_x, wid_pos_y;
 
         if constexpr(is_vertical)
         {
             // Topleft
-            i16 wid_pos_x = wid->margin.left + padding.left;
-            i16 wid_pos_y = wid->margin.top + padding.top + topleft.y;
-
-            if (!has_flag(wid->size_flags, SizeFlags::MinHeight))
-            {
-                // Widget height is relative to parent
-                wid->size.height = wid->size_hint.h * this->size.height / 12;
-                // TODO think about 12 as a constant
-            }
-
-            if (!has_flag(wid->size_flags, SizeFlags::MinWidth))
-            {
-                // Widget height is relative to parent
-                wid->size.width = wid->size_hint.w * this->size.width / 12;
-                // TODO think about 12 as a constant
-            }
-
-            // TODO calculate pos
+            wid_pos_x = wid->margin.left + padding.left;
+            wid_pos_y = wid->margin.top + padding.top + topleft.y;
         }
-        // TODO do the same for horizontal, add padding: auto
-
-
-        if (!is_vertical && (wid->margin.top == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignVCenter)))
+        // TODO add padding: auto
+        else
         {
-            // Center (vertical in HBox)
-            i16 wid_pos = wid->margin.top + padding.top;
-            ui16 wid_size, max_size = bottomright.y - topleft.y - wid->margin.bottom - padding.bottom - wid_pos;
-            if (has_flag(wid->size_flags, SizeFlags::VExpanding))
-            {
-                wid_size = max_size;
-                wid->size.height = wid_size;
-            }
-            else
-            {
-                wid_size = wid->size.height;
-                wid_pos += (max_size - wid_size) / 2;
-                // TODO perhaps we need align here
-            }
-            wid->pos.y = wid_pos;
+            // Topleft
+            wid_pos_x = wid->margin.left + padding.left + topleft.x;
+            wid_pos_y = wid->margin.top + padding.top;
         }
 
-        // Perhaps this should be in a separate macro function
-        else if (is_vertical && (wid->margin.left == margin_auto || has_flag(wid->size_flags, SizeFlags::AlignHCenter)))
+        if (!has_flag(wid->size_flags, SizeFlags::MinHeight))
         {
-            // Center (horizontal in VBox)
-            i16 wid_pos = wid->margin.left + padding.left;
-            ui16 wid_size, max_size = bottomright.x - topleft.x - wid->margin.right - padding.right - wid_pos;
-            if (expanding)
-            {
-                wid_size = max_size;
-                wid->size.height = wid_size;
-            }
-            else
-            {
-                wid_size = wid->size.width;
-                wid_pos += (max_size - wid_size) / 2;
-                // TODO ditto
-            }
-            wid->pos.y = wid_pos;
-        }
+            // Widget height is relative to parent
+            wid->size.height = wid->size_hint.h * this->size.height / 12;
+            // TODO think about 12 as a constant
+        } // else .height contains exact height
 
-        // Here we handle regular margin options
-        if (wid->margin.top != margin_auto)
+        if (!has_flag(wid->size_flags, SizeFlags::MinWidth))
         {
-            i16 wid_pos = wid->margin.top + padding.top;
-            wid->pos.y = wid_pos;
-
-            // TODO perhaps handle alignment here (or in a second pass)
-
-            if (is_vertical)
-                total_size += wid_pos + wid->size.height + wid->margin.bottom + padding.bottom;
+            // Widget height is relative to parent
+            wid->size.width = wid->size_hint.w * this->size.width / 12;
         }
 
-        if (wid->margin.left != margin_auto)
-        {
-            i16 wid_pos = wid->margin.left + padding.left;
-            wid->pos.x = wid_pos;
+        wid->pos.x = wid_pos_x;
+        wid->pos.y = wid_pos_y;
+        // TODO perhaps add expanding padding
 
-            if (!is_vertical)
-                total_size += wid_pos + wid->size.width + wid->margin.right + padding.right;
-        }
+        if constexpr (is_vertical)
+            return wid->size.height;
+        else
+            return wid->size.width;
 
-        wid->pos += topleft;
 
-        if (wid->margin.top == margin_auto && is_vertical || wid->margin.left == margin_auto && !is_vertical)
-        {
-            // We need to calculate margin in the end
-            expanding = true;
-            return 0;
-        }
-
-        return total_size;
     }
 
 } // phi

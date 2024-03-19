@@ -12,6 +12,7 @@ namespace phi
 {
 
     class Screen;
+    class State;
 
     class Widget : public Base
     {
@@ -33,15 +34,17 @@ namespace phi
     public:
         Screen(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag extra_size_policy, Flag extra_screen_flags,
                Flag screen_policy);
-        ~Screen();
+        ~Screen() {};
         void (*init)();
-        void compute_widget_sizes();
+        void constraint();
 
         Array<Base*> widgets;
         Selector select;
         Flag screen_flags;
         Flag screen_policy;
         Padding padding;
+
+        friend State;
     protected:
         template<bool is_vertical>
         void _constraint_process();

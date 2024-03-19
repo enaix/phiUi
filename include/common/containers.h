@@ -8,6 +8,7 @@
 #include "common/common.h"
 
 #include <memory>
+#include <cstdlib>
 
 namespace phi
 {
@@ -26,22 +27,24 @@ namespace phi
         ~Array();
         st size() const;
         T& operator[](st i);
+        void append(T& elem);
 
     protected:
         void _alloc();
         st _size;
+        st _cap;
         st _reserve;
         T* _data;
     };
 
     template<class T>
-    Array<T>::Array() : _size(0), _reserve(ARRAY_PREALLOC_SMALL), _data(nullptr)
+    Array<T>::Array() : _size(0), _cap(0), _reserve(ARRAY_PREALLOC_SMALL), _data(nullptr)
     {
 
     }
 
     template<class T>
-    Array<T>::Array(ui16 reserve) : _size(0), _reserve(reserve), _data(nullptr)
+    Array<T>::Array(ui16 reserve) : _size(0), _cap(0), _reserve(reserve), _data(nullptr)
     {
 
     }
@@ -50,18 +53,50 @@ namespace phi
     void Array<T>::_alloc()
     {
         // TODO implement container
+        if (_size == 0)
+        {
+            _cap = sizeof(T) * _reserve;
+            _data = malloc(_cap); // TODO change _reserve to _prealloc
+            if (!_data)
+            {
+                // TODO add logger object that can print on screen
+                abort();
+            }
+        }
+        else
+        {
+            _cap = _size * _reserve;
+            T* new_data = realloc(_data, _cap);
+            if (!new_data)
+            {
+                // Add logging
+                free(_data);
+                abort();
+            }
+        }
     }
 
     template<class T>
     Array<T>::~Array()
     {
-
+        if (_data)
+            free(_data);
     }
 
     template<class T>
     st Array<T>::size() const
     {
         return _size;
+    }
+
+    template<class T>
+    void Array<T>::append(T& elem)
+    {
+        if (_size + 1 > _cap)
+            _alloc();
+
+        _size++;
+        _data[_size] = elem;
     }
 
     template<class T>

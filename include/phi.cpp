@@ -18,10 +18,21 @@ namespace phi
 
     void Phi::loop()
     {
+        // Main Phi loop. Calls renderer
 #ifdef DESKTOP
         renderer.clear();
         // Call the skin to redraw
         renderer.render();
 #endif
+    }
+
+    void Phi::set_root(Screen* root)
+    {
+        _state.set_root(root);
+    }
+
+    void Phi::show()
+    {
+        _state.constraint();
     }
 } // phi

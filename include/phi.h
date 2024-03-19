@@ -34,6 +34,8 @@
 #endif
 
 #include "common/common.h"
+#include "widgets/widgets.h"
+#include "state/state.h"
 
 namespace phi
 {
@@ -56,6 +58,13 @@ namespace phi
         Desktop renderer;
 #endif
         void loop();
+
+        void set_root(Screen* root);
+
+        void show();
+
+    protected:
+        State _state;
     };
 
 } // phi
