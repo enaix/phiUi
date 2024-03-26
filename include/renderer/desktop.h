@@ -9,6 +9,12 @@
 
 #include "renderer/renderer.h"
 
+#ifndef RENDERER_TYPE
+class Desktop;
+// Define the renderer type
+#define RENDERER_TYPE Desktop
+#endif
+
 namespace phi
 {
 
@@ -19,6 +25,7 @@ namespace phi
         ~Desktop();
 
         void drawPixel(Point pos);
+        void drawRect(Point pos, Size size);
         void setColor(Color color);
         void render();
         void clear();

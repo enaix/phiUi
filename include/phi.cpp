@@ -22,6 +22,7 @@ namespace phi
 #ifdef DESKTOP
         renderer.clear();
         // Call the skin to redraw
+        _state.draw(&renderer);
         renderer.render();
 #endif
     }
@@ -34,5 +35,6 @@ namespace phi
     void Phi::show()
     {
         _state.constraint();
+        _state.show();
     }
 } // phi

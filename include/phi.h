@@ -52,10 +52,11 @@ namespace phi
 
 #ifdef MONO_U8G2
         MONO_U8G2_DISPLAY u8g2;
+        // TODO move display declaration to renderer
 #endif
 
 #ifdef DESKTOP
-        Desktop renderer;
+        RENDERER_TYPE renderer;
 #endif
         void loop();
 

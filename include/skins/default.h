@@ -6,15 +6,16 @@
 #define PHIUI_DEFAULT_H
 
 #include "common/common.h"
+#include "widgets/widgets.h"
 
 namespace phi
 {
 
-    class Skin
+    template<class Wid>
+    void paint_widget_box(Wid wid, RENDERER_TYPE renderer)
     {
-    public:
-        Skin();
-    };
+        renderer.drawRect(wid.pos, wid.size);
+    }
 
 } // phi
 

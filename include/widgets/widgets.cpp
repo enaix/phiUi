@@ -18,7 +18,7 @@ namespace phi
     Screen::Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                    Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0)
     : Widget(parent, hint, pos, size, extra_flags), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
-    screen_flags(extra_screen_flags), screen_policy(screen_policy)
+    screen_flags(extra_screen_flags), screen_policy(screen_policy), is_init(false)
     {
         size_flags = extra_size_flags;
     }

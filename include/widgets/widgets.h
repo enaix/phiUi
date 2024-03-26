@@ -27,6 +27,7 @@ namespace phi
         // Flags flags;  <- they are in the derived class
         Flag size_flags;
         SizeHint size_hint;
+        Array<void(*)(Widget, RENDERER_TYPE)> classes;
     };
 
     class Screen : public Widget
@@ -46,6 +47,7 @@ namespace phi
 
         friend State;
     protected:
+        bool is_init;
         template<bool is_vertical>
         void _constraint_process();
         template<bool is_vertical>

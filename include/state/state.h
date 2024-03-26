@@ -17,10 +17,11 @@ namespace phi
     public:
         State() : enable_draw(false), _cur_screen(nullptr), _root(nullptr) {};
 
-        void draw();
+        void draw(RENDERER_TYPE* render);
         void constraint();
 
         void set_root(Screen* root) {_root = root;}
+        void show() {enable_draw = true;}
 
     protected:
         // Screens
@@ -30,6 +31,9 @@ namespace phi
 
         // Properties
         bool enable_draw;
+
+        template<class Wid>
+        void draw_wid(Wid* wid, RENDERER_TYPE* render);
     };
 
 } // phi

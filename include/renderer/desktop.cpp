@@ -36,6 +36,16 @@ namespace phi
         SDL_RenderDrawPoint(renderer, pos.x, pos.y);
     }
 
+    void Desktop::drawRect(Point pos, Size size)
+    {
+        SDL_Rect r;
+        r.x = pos.x;
+        r.y = pos.y;
+        r.w = size.width;
+        r.h = size.height;
+        SDL_RenderFillRect(renderer, &r);
+    }
+
     void Desktop::setColor(phi::Color color)
     {
         #ifdef MONOCHROME
