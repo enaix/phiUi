@@ -9,6 +9,9 @@
 #include "common/containers.h"
 #include "widgets/widgets.h"
 
+// TODO think about dynamic imports
+#include "skins/default.h"
+
 namespace phi
 {
 

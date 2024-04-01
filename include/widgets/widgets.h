@@ -7,6 +7,8 @@
 
 #include "common/common.h"
 #include "common/containers.h"
+#include "renderer/renderer.h"
+#include "skins/skins_common.h"
 
 namespace phi
 {
@@ -27,7 +29,10 @@ namespace phi
         // Flags flags;  <- they are in the derived class
         Flag size_flags;
         SizeHint size_hint;
-        Array<void(*)(Widget, RENDERER_TYPE)> classes;
+
+        // Define default type and name
+        WID_TYPE("BaseWidget")
+        WID_NAME("")
     };
 
     class Screen : public Widget
@@ -45,6 +50,8 @@ namespace phi
         Flag screen_policy;
         Padding padding;
 
+        WID_TYPE("BaseScreen")
+        WID_NAME("")
         friend State;
     protected:
         bool is_init;

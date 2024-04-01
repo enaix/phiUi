@@ -5,7 +5,7 @@
 #include "phi.h"
 
 #include "common/common.h"
-#include "renderer/renderer.h"
+#include "renderer/renderer_base.h"
 
 int main()
 {

@@ -6,6 +6,7 @@
 #define PHIUI_COMMON_H
 
 #include "options.h"
+#include "skins/skins_common.h"
 
 #include <cstdint>
 #include <climits>
@@ -128,6 +129,8 @@ namespace phi
     public:
         Base() {};
         Flag flags = Flag(WidgetFlags::Hidden);
+        WID_TYPE("None")
+        WID_NAME("")
     };
 
     // Check if the flag is present

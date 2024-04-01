@@ -7,13 +7,8 @@
 
 #include <SDL.h>
 
-#include "renderer/renderer.h"
-
-#ifndef RENDERER_TYPE
-class Desktop;
-// Define the renderer type
-#define RENDERER_TYPE Desktop
-#endif
+#include "common/options.h"
+#include "renderer/renderer_base.h"
 
 namespace phi
 {

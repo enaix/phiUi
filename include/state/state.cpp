@@ -26,10 +26,7 @@ namespace phi
     template<class Wid>
     void State::draw_wid(Wid* wid, RENDERER_TYPE* render)
     {
-        for (ui8 i = 0; i < wid->classes.size(); i++)
-        {
-            wid->classes[i](wid, render);
-        }
+        Skin::draw(wid, render);
     }
 
 } // phi

@@ -5,33 +5,7 @@
 #ifndef PHIUI_PHI_H
 #define PHIUI_PHI_H
 
-#ifdef MONO_U8G2  // Enable monochrome U8G2 plugin
-
-#ifndef MONO_U8G2_DISPLAY  // Check for the display type, it must be defined
-#error "MONO_U8G2_DISPLAY is unset. Please define the display type"
-#endif
-
-#define MONOCHROME // Set color to monochrome
-
-#include <U8g2lib.h>
-
-#elif defined(DESKTOP)
-
-#ifndef DISPLAY_WIDTH
-#error "DISPLAY_WIDTH is unset. Please define display width to emulate"
-#endif
-
-#ifndef DISPLAY_HEIGHT
-#error "DISPLAY_HEIGHT is unset. Please define display width to emulate"
-#endif
-
-#include "renderer/desktop.h"
-
-#else
-
-#error "No framework has been selected. Please define renderer macro"
-
-#endif
+#include "renderer/renderer.h"
 
 #include "common/common.h"
 #include "widgets/widgets.h"

@@ -1,29 +1,18 @@
 //
-// Created by Flynn on 21.02.2024.
+// Created by Flynn on 01.04.2024.
 //
 
 #ifndef PHIUI_RENDERER_H
 #define PHIUI_RENDERER_H
 
-#include "common/common.h"
+// Include the correct renderer
 
-namespace phi
-{
+#if defined(MONO_U8G2)
+// Include u8g2 renderer
+#elif defined(DESKTOP)
 
-    class Renderer
-    {
-    public:
-        Renderer(Point res) : _res(res) {};
-        ~Renderer() {};
+#include "renderer/desktop.h"
 
-        void drawPixel(Point pos) {};
-        void setColor(Color color) {};
-        void render() {};
-        void clear() {};
-    protected:
-        Point _res;
-    };
-
-} // phi
+#endif
 
 #endif //PHIUI_RENDERER_H

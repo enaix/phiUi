@@ -7,15 +7,38 @@
 
 #include "common/common.h"
 #include "widgets/widgets.h"
+#include "skins/skins_common.h"
 
 namespace phi
 {
+    DRAW_COUNTER_START
 
-    template<class Wid>
-    void paint_widget_box(Wid wid, RENDERER_TYPE renderer)
+    class Skin
     {
-        renderer.drawRect(wid.pos, wid.size);
-    }
+    public:
+        template<class Wid>
+        requires WidgetType<Wid, "BaseWidget">
+        static void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default widget
+        {
+            renderer->drawRect(wid->pos, wid->size);
+        }
+
+        template<class Wid>
+        requires WidgetType<Wid, "BaseScreen">
+        static void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default screen
+        {
+            renderer->drawRect(wid->pos, wid->size);
+        }
+
+        template<class Wid>
+        requires WidgetType<Wid, "None">
+        __attribute__ ((warning ("Could not find skin overload")))
+        static void draw(Wid* wid, RENDERER_TYPE* renderer)
+        {
+            // Do nothing;
+        }
+    };
+
 
 } // phi
 
