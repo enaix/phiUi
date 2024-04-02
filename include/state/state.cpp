@@ -26,7 +26,8 @@ namespace phi
     template<class Wid>
     void State::draw_wid(Wid* wid, RENDERER_TYPE* render)
     {
-        Skin::draw(wid, render);
+        constexpr StrID<Wid::type> type;
+        _skin.draw<type>(wid, render);
     }
 
 } // phi

@@ -31,6 +31,7 @@ namespace phi
         Screen* _cur_screen; //
         Screen* _root; // Root screen that contains the underlying ones. Perhaps we only need _overlays
         Array<Screen*> _overlays; // Sticky screens that are always present
+        Skin _skin;
 
         // Properties
         bool enable_draw;

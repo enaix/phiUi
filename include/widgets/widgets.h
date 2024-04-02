@@ -19,7 +19,8 @@ namespace phi
     class Widget : public Base
     {
     public:
-        Widget(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag size_flags);
+        Widget(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
+               Flag size_flags = 0);
 
         Screen* parent;
         Point pos;
@@ -38,8 +39,8 @@ namespace phi
     class Screen : public Widget
     {
     public:
-        Screen(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag extra_size_policy, Flag extra_screen_flags,
-               Flag screen_policy);
+        Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
+               Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0);
         ~Screen() {};
         void (*init)();
         void constraint();

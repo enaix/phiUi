@@ -5,18 +5,19 @@
 #include "phi.h"
 
 #include "common/common.h"
-#include "renderer/renderer_base.h"
+#include "widgets/widgets.h"
 
 int main()
 {
     auto phi = phi::Phi();
 
-    while(true)
-    {
-        phi.renderer.clear();
-        phi.renderer.drawPixel({10, 10});
-        phi.renderer.render();
-    }
+    auto screen = phi::Screen(nullptr);
+
+    phi.set_root(&screen);
+
+    phi.show();
+
+    while(true) phi.loop();
 
     return 0;
 }

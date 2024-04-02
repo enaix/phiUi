@@ -26,26 +26,18 @@ namespace phi
         // https://ctrpeach.io/posts/cpp20-string-literal-template-parameters/
     };
 
+    // Wrapper for ConstStr type
+    template<ConstStr STR>
+    class StrID
+    {
+    public:
+        constexpr StrID() {}
+        //static constexpr char* str() {return STR.str;}
+    };
+
     // ID macro that defines the widget type string
     #define WID_TYPE(x) static constexpr char type[] = x;
     #define WID_NAME(x) static constexpr char name[] = x;
-
-    // Reset draw counter
-    #define DRAW_COUNTER_START \
-    #undef DRAW_COUNTER        \
-    #define DRAW_COUNTER 0
-
-    // DRAW_COUNTER ++
-    #define INCREMENT_COUNTER() <skins/increment_counter.h>
-
-    // Undef the draw counter
-    #define DRAW_COUNTER_END \
-    #ifdef DRAW_COUNTER      \
-    #undef DRAW_COUNTER      \
-    #endif                   \
-    #ifdef COUNTER_HELPER    \
-    #undef COUNTER_HELPER    \
-    #endif
 
     constexpr bool compare(char const* lhs, char const* rhs)
     {
@@ -59,11 +51,11 @@ namespace phi
     }
 
     // Concept that searches for the matching widget name and type
-    template<typename Wid, ConstStr WidType> // SIZE will be deduced
+    /*template<typename Wid, ConstStr WidType> // SIZE will be deduced
     concept WidgetType = requires()
     {
         compare(Wid::type, WidType.str) || compare(Wid::name, WidType.str);
-    };
+    };*/
 
 }
 

@@ -7,16 +7,15 @@
 namespace phi
 {
 
-    Widget::Widget(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
-                   Flag size_flags = 0)
+    Widget::Widget(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag size_flags)
     : Base(), parent(parent), pos(pos), size(size), size_flags(size_flags), margin({0, 0, 0, 0}),
       size_hint(hint)
     {
         flags ^= extra_flags;
     }
 
-    Screen::Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
-                   Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0)
+    Screen::Screen(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag extra_size_flags, Flag extra_screen_flags,
+            Flag screen_policy)
     : Widget(parent, hint, pos, size, extra_flags), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
     screen_flags(extra_screen_flags), screen_policy(screen_policy), is_init(false)
     {

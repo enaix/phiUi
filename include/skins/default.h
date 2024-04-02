@@ -11,29 +11,24 @@
 
 namespace phi
 {
-    DRAW_COUNTER_START
-
     class Skin
     {
     public:
-        template<class Wid>
-        requires WidgetType<Wid, "BaseWidget">
-        static void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default widget
+        template<StrID<"BaseWidget"> type, class Wid>
+        void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default widget
         {
             renderer->drawRect(wid->pos, wid->size);
         }
 
-        template<class Wid>
-        requires WidgetType<Wid, "BaseScreen">
-        static void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default screen
+        template<StrID<"BaseScreen"> type, class Wid>
+        void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default screen
         {
             renderer->drawRect(wid->pos, wid->size);
         }
 
-        template<class Wid>
-        requires WidgetType<Wid, "None">
+        template<StrID<"None"> type, class Wid>
         __attribute__ ((warning ("Could not find skin overload")))
-        static void draw(Wid* wid, RENDERER_TYPE* renderer)
+        void draw(Wid* wid, RENDERER_TYPE* renderer)
         {
             // Do nothing;
         }
