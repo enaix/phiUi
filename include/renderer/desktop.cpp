@@ -19,7 +19,7 @@ namespace phi
 
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
     }
@@ -36,7 +36,7 @@ namespace phi
         SDL_RenderDrawPoint(renderer, pos.x, pos.y);
     }
 
-    void Desktop::drawRect(Point pos, Size size)
+    void Desktop::drawFilledRect(Point pos, Size size)
     {
         SDL_Rect r;
         r.x = pos.x;
@@ -44,6 +44,16 @@ namespace phi
         r.w = size.width;
         r.h = size.height;
         SDL_RenderFillRect(renderer, &r);
+    }
+
+    void Desktop::drawRect(Point pos, Size size)
+    {
+        SDL_Rect r;
+        r.x = pos.x;
+        r.y = pos.y;
+        r.w = size.width;
+        r.h = size.height;
+        SDL_RenderDrawRect(renderer, &r);
     }
 
     void Desktop::setColor(phi::Color color)
@@ -63,7 +73,9 @@ namespace phi
 
     void Desktop::clear()
     {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     }
 
 } // phi

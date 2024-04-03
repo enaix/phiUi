@@ -19,6 +19,9 @@ namespace phi
     {
         if (!_root->is_init && _root->init)
             _root->init();
+        _root->size.width = DISPLAY_WIDTH; // TODO make it plugin-independent
+        _root->size.height = DISPLAY_HEIGHT;
+
         _root->is_init = true;
         _root->constraint();
     }

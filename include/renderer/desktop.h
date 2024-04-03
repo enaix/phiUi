@@ -20,6 +20,7 @@ namespace phi
         ~Desktop();
 
         void drawPixel(Point pos);
+        void drawFilledRect(Point pos, Size size);
         void drawRect(Point pos, Size size);
         void setColor(Color color);
         void render();
