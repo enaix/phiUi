@@ -42,10 +42,10 @@ namespace phi
         Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0);
         ~Screen() {};
-        void (*init)();
+        void (*init)(Screen*);
         void constraint();
 
-        Array<Base*> widgets;
+        Array<Widget> widgets;
         Selector select;
         Flag screen_flags;
         Flag screen_policy;

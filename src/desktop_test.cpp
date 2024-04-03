@@ -12,6 +12,13 @@ int main()
     auto phi = phi::Phi();
 
     auto screen = phi::Screen(nullptr);
+    screen.init = [](phi::Screen* parent){
+        phi::Widget wid1 = phi::Widget(parent, {12, 6});
+        phi::Widget wid2 = phi::Widget(parent, {12, 6});
+
+        parent->widgets.append(wid1);
+        parent->widgets.append(wid2);
+    };
 
     phi.set_root(&screen);
 

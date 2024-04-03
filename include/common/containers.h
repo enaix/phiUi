@@ -56,7 +56,7 @@ namespace phi
         if (_size == 0)
         {
             _cap = sizeof(T) * _reserve;
-            _data = malloc(_cap); // TODO change _reserve to _prealloc
+            _data = reinterpret_cast<T*>(malloc(_cap)); // TODO change _reserve to _prealloc
             if (!_data)
             {
                 // TODO add logger object that can print on screen
@@ -66,7 +66,7 @@ namespace phi
         else
         {
             _cap = _size * _reserve;
-            T* new_data = realloc(_data, _cap);
+            T* new_data = reinterpret_cast<T*>(realloc(_data, _cap));
             if (!new_data)
             {
                 // Add logging
@@ -96,7 +96,7 @@ namespace phi
             _alloc();
 
         _size++;
-        _data[_size] = elem;
+        _data[_size] = elem; // TODO think about move semantics
     }
 
     template<class T>

@@ -11,14 +11,14 @@ namespace phi
         draw_wid(_root, render);
         for (st i = 0; i < _root->widgets.size(); i++)
         {
-            draw_wid(_root->widgets[i], render);
+            draw_wid(&_root->widgets[i], render);
         }
     }
 
     void State::constraint()
     {
         if (!_root->is_init && _root->init)
-            _root->init();
+            _root->init(_root);
         _root->size.width = DISPLAY_WIDTH; // TODO make it plugin-independent
         _root->size.height = DISPLAY_HEIGHT;
 

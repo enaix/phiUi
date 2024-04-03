@@ -55,11 +55,11 @@ namespace phi
         // In order to save memory, we iterate over the list twice O(2*n)
         for (st i = 0; i < widgets.size(); i++)
         {
-            if (has_flag(widgets[i]->flags, WidgetFlags::Hidden))
+            if (has_flag(widgets[i].flags, WidgetFlags::Hidden))
                 continue;
 
             // Here we can safely cast this to Widget*
-            Widget* wid = static_cast<Widget*>(widgets[i]);
+            Widget* wid = &widgets[i];//static_cast<Widget*>();
 
             if (has_flag(wid->size_flags, SizeFlags::Fixed))
                 continue;
