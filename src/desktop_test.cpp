@@ -12,6 +12,7 @@ int main()
     auto phi = phi::Phi();
 
     auto screen = phi::Screen(nullptr);
+    screen.screen_policy = phi::Flag(phi::ScreenPolicy::Horizontal);
     screen.init = [](phi::Screen* parent){
         phi::Widget wid1 = phi::Widget(parent, {12, 6});
         phi::Widget wid2 = phi::Widget(parent, {12, 6});

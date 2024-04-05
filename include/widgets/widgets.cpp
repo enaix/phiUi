@@ -9,9 +9,9 @@ namespace phi
 
     Widget::Widget(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag size_flags)
     : Base(), parent(parent), pos(pos), size(size), size_flags(size_flags), margin({0, 0, 0, 0}),
-      size_hint(hint)
+      size_hint(hint), bg_size({0, 0})
     {
-        flags ^= extra_flags;
+        flags = extra_flags;
     }
 
     Screen::Screen(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag extra_size_flags, Flag extra_screen_flags,
