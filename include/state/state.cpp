@@ -17,10 +17,11 @@ namespace phi
 
     void State::constraint()
     {
-        if (!_root->is_init && _root->init)
-            _root->init(_root);
         _root->size.width = DISPLAY_WIDTH; // TODO make it plugin-independent
         _root->size.height = DISPLAY_HEIGHT;
+
+        if (!_root->is_init && _root->init)
+            _root->init(_root); // Call init to create widgets
 
         _root->is_init = true;
         _root->constraint();

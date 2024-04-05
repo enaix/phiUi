@@ -23,7 +23,7 @@ namespace phi
     {
     public:
         Array();
-        Array(ui16 reserve);
+        explicit Array(ui16 reserve);
         ~Array();
         st size() const;
         T& operator[](st i);
@@ -52,7 +52,6 @@ namespace phi
     template<class T>
     void Array<T>::_alloc()
     {
-        // TODO implement container
         if (_size == 0)
         {
             _cap = sizeof(T) * _reserve;
@@ -95,8 +94,8 @@ namespace phi
         if (_size + 1 > _cap)
             _alloc();
 
-        _size++;
         _data[_size] = elem; // TODO think about move semantics
+        _size++;
     }
 
     template<class T>

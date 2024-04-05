@@ -15,6 +15,8 @@ int main()
     screen.init = [](phi::Screen* parent){
         phi::Widget wid1 = phi::Widget(parent, {12, 6});
         phi::Widget wid2 = phi::Widget(parent, {12, 6});
+        wid1.margin = phi::Margin{2, 2, 2, 2};
+        wid2.margin = phi::Margin{2, 2, 2, 2};
 
         parent->widgets.append(wid1);
         parent->widgets.append(wid2);
