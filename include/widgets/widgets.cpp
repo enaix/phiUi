@@ -99,7 +99,7 @@ namespace phi
         if constexpr(is_vertical)
         {
             // Topleft
-            wid_pos_x = wid->margin.left + padding.left;
+            wid_pos_x = wid->margin.left + padding.left + wid->pos.x; // Widget position is used as an offset
             wid_pos_y = wid->margin.top + padding.top + topleft.y;
         }
         // TODO add padding: auto
@@ -107,7 +107,7 @@ namespace phi
         {
             // Topleft
             wid_pos_x = wid->margin.left + padding.left + topleft.x;
-            wid_pos_y = wid->margin.top + padding.top;
+            wid_pos_y = wid->margin.top + padding.top + wid->pos.y;
         }
 
         if (!has_flag(wid->size_flags, SizeFlags::MinHeight))

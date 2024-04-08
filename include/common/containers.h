@@ -54,8 +54,8 @@ namespace phi
     {
         if (_size == 0)
         {
-            _cap = sizeof(T) * _reserve;
-            _data = reinterpret_cast<T*>(malloc(_cap)); // TODO change _reserve to _prealloc
+            _cap = _reserve;
+            _data = reinterpret_cast<T*>(malloc(sizeof(T) * _cap)); // TODO change _reserve to _prealloc
             if (!_data)
             {
                 // TODO add logger object that can print on screen
@@ -65,13 +65,14 @@ namespace phi
         else
         {
             _cap = _size * _reserve;
-            T* new_data = reinterpret_cast<T*>(realloc(_data, _cap));
+            T* new_data = reinterpret_cast<T*>(realloc(_data, sizeof(T) * _cap));
             if (!new_data)
             {
                 // Add logging
                 free(_data);
                 abort();
             }
+            _data = new_data;
         }
     }
 

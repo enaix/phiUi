@@ -14,13 +14,13 @@ int main()
     auto screen = phi::Screen(nullptr);
     screen.screen_policy = phi::Flag(phi::ScreenPolicy::Vertical);
     screen.init = [](phi::Screen* parent){
-        phi::Widget wid1 = phi::Widget(parent, {12, 6});
-        phi::Widget wid2 = phi::Widget(parent, {12, 6});
-        wid1.margin = phi::Margin{2, 2, 2, 2};
-        wid2.margin = phi::Margin{2, 2, 2, 2};
-
-        parent->widgets.append(wid1);
-        parent->widgets.append(wid2);
+        for (phi::st i = 0; i < 6; i++)
+        {
+            phi::Widget wid = phi::Widget(parent, {2, 2});
+            wid.margin = phi::Margin{2, 2, 2, 2};
+            wid.pos.x = i * 10;
+            parent->widgets.append(wid);
+        }
     };
 
     phi.set_root(&screen);
