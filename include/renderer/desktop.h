@@ -24,10 +24,12 @@ namespace phi
         void drawRect(Point pos, Size size);
         void setColor(Color color);
         void render();
+        void poll();
         void clear();
     protected:
         SDL_Renderer* renderer = nullptr;
         SDL_Window* window = nullptr;
+        SDL_Event cur_event;
     };
 
 } // phi

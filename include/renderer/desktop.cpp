@@ -78,4 +78,16 @@ namespace phi
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     }
 
+    void Desktop::poll()
+    {
+        if (SDL_PollEvent(&cur_event))
+        {
+            if (cur_event.type == SDL_QUIT)
+            {
+                // Shutdown
+                exit(0);
+            }
+        }
+    }
+
 } // phi

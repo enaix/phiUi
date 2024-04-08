@@ -19,11 +19,12 @@ namespace phi
     void Phi::loop()
     {
         // Main Phi loop. Calls renderer
-#ifdef DESKTOP
+#ifdef DESKTOP // TODO remove plugin-dependent code
         renderer.clear();
         // Call the skin to redraw
         _state.draw(&renderer);
         renderer.render();
+        renderer.poll();
 #endif
     }
 
