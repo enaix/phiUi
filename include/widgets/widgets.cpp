@@ -113,16 +113,16 @@ namespace phi
         if (!has_flag(wid->size_flags, SizeFlags::MinHeight))
         {
             // Widget height is relative to parent
-            ui16 maxheight = this->size.height - this->padding.top - this->padding.bottom;
-            wid->size.height = wid->size_hint.h * maxheight / 12 - wid->margin.top - wid->margin.bottom;
+            ui16 total_padding = this->padding.top + this->padding.bottom;
+            wid->size.height = wid->size_hint.h * this->size.height / 12 - total_padding - wid->margin.top - wid->margin.bottom;
             // TODO think about 12 as a constant
         } // else .height contains exact height
 
         if (!has_flag(wid->size_flags, SizeFlags::MinWidth))
         {
             // Widget width is relative to parent
-            ui16 maxwidth = this->size.width - this->padding.left - this->padding.right;
-            wid->size.width = wid->size_hint.w * maxwidth / 12 - wid->margin.left - wid->margin.right;
+            ui16 total_padding = this->padding.left + this->padding.right;
+            wid->size.width = wid->size_hint.w * this->size.width / 12 - total_padding - wid->margin.left - wid->margin.right;
         }
 
         wid->pos.x = wid_pos_x;
@@ -130,9 +130,9 @@ namespace phi
         // TODO perhaps add expanding padding
 
         if constexpr (is_vertical)
-            return wid->size.height + wid->margin.bottom;
+            return wid->size.height + wid->margin.top + wid->margin.bottom;
         else
-            return wid->size.width + wid->margin.right;
+            return wid->size.width + wid->margin.left + wid->margin.right;
     }
 
 } // phi
