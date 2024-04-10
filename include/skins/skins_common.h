@@ -28,10 +28,18 @@ namespace phi
 
     // Wrapper for ConstStr type
     template<ConstStr STR>
-    class StrID
+    class WidType
     {
     public:
-        constexpr StrID() {}
+        constexpr WidType() {}
+        //static constexpr char* str() {return STR.str;}
+    };
+
+    template<ConstStr STR>
+    class WidName
+    {
+    public:
+        constexpr WidName() {}
         //static constexpr char* str() {return STR.str;}
     };
 

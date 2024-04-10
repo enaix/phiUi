@@ -19,6 +19,9 @@ namespace phi
     class Widget : public Base
     {
     public:
+        template<st N>
+        explicit constexpr Widget(const char (&elem_name)[N]);
+
         explicit Widget(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                Flag size_flags = 0);
 
@@ -39,6 +42,9 @@ namespace phi
     class Screen : public Widget
     {
     public:
+        template<st N>
+        explicit constexpr Screen(const char (&elem_name)[N]);
+
         explicit Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0);
         ~Screen() {};

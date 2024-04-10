@@ -14,12 +14,27 @@ namespace phi
         flags = extra_flags;
     }
 
+    template<st N>
+    constexpr Widget::Widget(const char (&elem_name)[N]) : Base(), parent(nullptr), pos({0, 0}), size({0, 0}), size_flags(0), margin({0, 0, 0, 0}),
+    size_hint({1, 1}), bg_size({0, 0})
+    {
+        name = elem_name;
+        flags = 0;
+    }
+
     Screen::Screen(Screen* parent, SizeHint hint, Point pos, Size size, Flag extra_flags, Flag extra_size_flags, Flag extra_screen_flags,
             Flag screen_policy)
     : Widget(parent, hint, pos, size, extra_flags), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
     screen_flags(extra_screen_flags), screen_policy(screen_policy), is_init(false)
     {
         size_flags = extra_size_flags;
+    }
+
+    template<st N>
+    constexpr Screen::Screen(const char (&elem_name)[N]) : Widget(elem_name), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
+    screen_flags(0), screen_policy(0), is_init(false)
+    {
+
     }
 
     void Screen::constraint()

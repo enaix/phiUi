@@ -14,19 +14,19 @@ namespace phi
     class Skin
     {
     public:
-        template<StrID<"BaseWidget"> type, class Wid>
+        template<WidType<"BaseWidget"> type, class Wid>
         void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default widget
         {
             renderer->drawRect(wid->pos, wid->size);
         }
 
-        template<StrID<"BaseScreen"> type, class Wid>
+        template<WidType<"BaseScreen"> type, class Wid>
         void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default screen
         {
             renderer->drawRect(wid->pos, wid->size);
         }
 
-        template<StrID<"None"> type, class Wid>
+        template<WidType<"None"> type, class Wid>
         __attribute__ ((warning ("Could not find skin overload")))
         void draw(Wid* wid, RENDERER_TYPE* renderer)
         {
