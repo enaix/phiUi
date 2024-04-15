@@ -32,6 +32,13 @@ namespace phi
         {
             // Do nothing;
         }
+
+        template<WidName<"BiosBox"> type, class Wid>
+        void draw(Wid* wid, RENDERER_TYPE* renderer) // Draw default screen
+        {
+            renderer->drawRect(wid->pos, wid->size);
+            renderer->drawRect({i16(wid->pos.x+1), i16(wid->pos.y+1)}, wid->size);
+        }
     };
 
 

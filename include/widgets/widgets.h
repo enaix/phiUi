@@ -15,16 +15,24 @@ namespace phi
 
     class Screen;
     class State;
+    class Skin;
 
     class Widget : public Base
     {
     public:
         template<st N>
-        explicit constexpr Widget(const char (&elem_name)[N]);
+        constexpr Widget(const char (&elem_name)[N]) : Base(), parent(nullptr), pos({0, 0}), size({0, 0}), size_flags(0), margin({0, 0, 0, 0}),
+        size_hint({1, 1}), bg_size({0, 0}), draw(nullptr)
+        {
+            //std::copy_n(elem_name, N, name);
+            flags = 0;
+        }
 
         explicit Widget(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                Flag size_flags = 0);
 
+
+        void (*draw)(Skin*, Widget*, RENDERER_TYPE*);
         Screen* parent;
         Point pos;
         Size size;  // TODO implement size policy
@@ -36,19 +44,21 @@ namespace phi
 
         // Define default type and name
         WID_TYPE("BaseWidget")
-        WID_NAME("")
     };
 
     class Screen : public Widget
     {
     public:
         template<st N>
-        explicit constexpr Screen(const char (&elem_name)[N]);
+        constexpr Screen(const char (&elem_name)[N]) : Widget(elem_name), init(nullptr), widgets(), select(0), padding({0, 0, 0, 0}),
+        screen_flags(0), screen_policy(0), is_init(false)
+        {
+        }
 
         explicit Screen(Screen* parent, SizeHint hint = {1, 1}, Point pos = {0, 0}, Size size = {0, 0}, Flag extra_flags = 0,
                Flag extra_size_flags = 0, Flag extra_screen_flags = 0, Flag screen_policy = 0);
         ~Screen() {};
-        void (*init)(Screen*);
+        void (*init)(Screen*, State*);
         void constraint();
 
         Array<Widget> widgets;
@@ -58,7 +68,7 @@ namespace phi
         Padding padding;
 
         WID_TYPE("BaseScreen")
-        WID_NAME("")
+        WID_NAME
         friend State;
     protected:
         bool is_init;

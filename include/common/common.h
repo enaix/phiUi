@@ -127,15 +127,15 @@ namespace phi
     class Base
     {
     public:
-        Base() {};
+        constexpr Base() {};
         Flag flags = Flag(WidgetFlags::Hidden);
         WID_TYPE("None")
-        WID_NAME("")
+        WID_NAME
     };
 
     // Check if the flag is present
     template<typename T>
-    const constexpr bool has_flag(Flag src, T flag)
+    constexpr bool has_flag(Flag src, T flag)
     {
         return src & Flag(flag);
     }

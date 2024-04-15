@@ -9,18 +9,6 @@
 namespace phi
 {
 
-    // SFINAE to check if draw overload for widget name exists
-    template <class T, ConstStr STR, class Wid>
-    struct has_draw_overload {
-        template <class U>
-        static constexpr auto test(U* u) -> decltype(&U::template draw<WidName<STR>, Wid>);
-
-        template <class U>
-        static constexpr std::false_type test(...);
-
-        static constexpr bool value = decltype(test<T>(nullptr))::value;
-    };
-
     void State::draw(RENDERER_TYPE* render)
     {
         draw_wid(_root, render);
@@ -36,7 +24,7 @@ namespace phi
         _root->size.height = DISPLAY_HEIGHT;
 
         if (!_root->is_init && _root->init)
-            _root->init(_root); // Call init to create widgets
+            _root->init(_root, this); // Call init to create widgets
 
         _root->is_init = true;
         _root->constraint();
@@ -46,12 +34,12 @@ namespace phi
     void State::draw_wid(Wid* wid, RENDERER_TYPE* render)
     {
         constexpr WidType<Wid::type> type;
-        constexpr WidName<Wid::name> name;
+        //constexpr WidName<Wid::name> name;
 
-        if constexpr (has_draw_overload<Skin, Wid::name, Wid>::value)
-            _skin.draw<name>(wid, render);
+        if (wid->draw)
+            wid->draw(&_skin, wid, render);
         else
-            _skin.draw<type>(wid, render);
+            _skin.draw<type, Wid>(wid, render);
 
     }
 

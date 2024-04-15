@@ -38,6 +38,9 @@ namespace phi
 
         void show();
 
+        template<class Wid, ConstStr STR>
+        void set_wid_name(Wid* wid) {_state.set_wid_name<STR>(wid);};
+
     protected:
         State _state;
     };
