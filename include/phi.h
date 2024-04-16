@@ -17,21 +17,10 @@ namespace phi
     class Phi
     {
     public:
-#ifdef MONO_U8G2
-        Phi(MONO_U8G2_DISPLAY display);
-#endif
-#ifdef DESKTOP
         Phi();
-#endif
 
-#ifdef MONO_U8G2
-        MONO_U8G2_DISPLAY u8g2;
-        // TODO move display declaration to renderer
-#endif
-
-#ifdef DESKTOP
         RENDERER_TYPE renderer;
-#endif
+
         void loop();
 
         void set_root(Screen* root);

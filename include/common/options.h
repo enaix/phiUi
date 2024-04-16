@@ -39,6 +39,14 @@
 // GENERATED PARAMETERS
 // ====================
 
+#ifndef DISPLAY_WIDTH
+#error "DISPLAY_WIDTH is unset. Please define display width"
+#endif
+
+#ifndef DISPLAY_HEIGHT
+#error "DISPLAY_HEIGHT is unset. Please define display height"
+#endif
+
 // Defining the renderer type
 #if defined(MONO_U8G2)
 
@@ -46,24 +54,31 @@
 #error "MONO_U8G2_DISPLAY is unset. Please define the display type"
 #endif
 
+#ifndef U8G2_PINS
+#error "U8G2_PINS is unset. Please define u8g2 pins to be passed in the constructor"
+#endif
+
 #ifndef MONOCHROME
 #define MONOCHROME // Set color to monochrome
 #endif
 
+#ifndef RENDERER_TYPE
+class U8G2Plugin;
+// Define the renderer type
+#define RENDERER_TYPE U8G2Plugin
+#endif
+
 #elif defined(DESKTOP)
-
-#ifndef DISPLAY_WIDTH
-#error "DISPLAY_WIDTH is unset. Please define display width to emulate"
-#endif
-
-#ifndef DISPLAY_HEIGHT
-#error "DISPLAY_HEIGHT is unset. Please define display width to emulate"
-#endif
 
 #ifndef RENDERER_TYPE
 class Desktop;
 // Define the renderer type
 #define RENDERER_TYPE Desktop
+#endif
+
+#ifdef RENDERER_PAGE_BUFFER
+#warning "Page buffer mode is not supported for desktop renderer"
+#unset RENDERER_PAGE_BUFFER
 #endif
 
 #else

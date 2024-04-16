@@ -6,26 +6,26 @@
 
 namespace phi
 {
-#ifdef MONO_U8G2
-    Phi::Phi(MONO_U8G2_DISPLAY display) : u8g2(display)
-    {}
-#endif
-
-#ifdef DESKTOP
     Phi::Phi() : renderer({DISPLAY_WIDTH, DISPLAY_HEIGHT})
     {}
-#endif
 
     void Phi::loop()
     {
         // Main Phi loop. Calls renderer
-#ifdef DESKTOP // TODO remove plugin-dependent code
         renderer.clear();
         // Call the skin to redraw
+
+#ifdef RENDERER_PAGE_BUFFER
+        do
+        {
+            _state.draw(&renderer);
+        } while (renderer.render());
+#else
         _state.draw(&renderer);
         renderer.render();
-        renderer.poll();
 #endif
+
+        renderer.poll();
     }
 
     void Phi::set_root(Screen* root)

@@ -2,38 +2,48 @@
 // Created by Flynn on 21.02.2024.
 //
 
+#ifdef MONO_U8G2
+
+// Define u8g2 plugin params
+#define MONO_U8G2_DISPLAY U8G2_SSD1306_128X64_NONAME_1_4W_HW_SPI
+#define DISPLAY_WIDTH 128
+#define DISPLAY_HEIGHT 64
+#define U8G2_PINS U8G2_R0, DISPLAY_CS, DISPLAY_DC, DISPLAY_RESET
+
+#endif
+
 #include "phi.h"
 
 #include "common/common.h"
 #include "widgets/widgets.h"
 
+#include "test_layout.cpp"
+
+#ifdef DESKTOP
+
 int main()
 {
-    auto phi = phi::Phi();
+    auto app = phi::Phi();
 
-    auto screen = phi::Screen(nullptr);
-    screen.screen_policy = phi::Flag(phi::ScreenPolicy::Vertical);
-    screen.init = [](phi::Screen* parent, phi::State* state){
-        for (phi::st i = 0; i < 6; i++)
-        {
-            phi::Widget wid = phi::Widget("");
-
-            if (i == 5)
-                state->set_wid_name<"BiosBox">(&wid);
-
-            wid.parent = parent;
-            wid.size_hint = {2, 2};
-            wid.margin = phi::Margin{2, 2, 2, 2};
-            wid.pos.x = i * 10;
-            parent->widgets.append(wid);
-        }
-    };
-
-    phi.set_root(&screen);
-
-    phi.show();
-
-    while(true) phi.loop();
+    setup_phi(app);
+    run(app);
 
     return 0;
 }
+#endif
+
+#ifdef MONO_U8G2
+
+phi::Phi app;
+
+void setup()
+{
+    setup_phi(app);
+}
+
+void loop()
+{
+    app.loop();
+}
+
+#endif

@@ -8,7 +8,9 @@
 // Include the correct renderer
 
 #if defined(MONO_U8G2)
-// Include u8g2 renderer
+
+#include "renderer/u8g2_plugin.h"
+
 #elif defined(DESKTOP)
 
 #include "renderer/desktop.h"

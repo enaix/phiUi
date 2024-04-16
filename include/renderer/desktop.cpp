@@ -7,7 +7,7 @@
 namespace phi
 {
 
-    Desktop::Desktop(phi::Point res) : Renderer(res)
+    Desktop::Desktop(Point res) : Renderer(res)
     {
         SDL_Init(SDL_INIT_VIDEO);
         //SDL_CreateWindowAndRenderer(_res.x, _res.y, 0, &window, &renderer);

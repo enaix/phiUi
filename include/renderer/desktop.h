@@ -16,7 +16,7 @@ namespace phi
     class Desktop : public Renderer
     {
     public:
-        Desktop(Point res);
+        explicit Desktop(Point res);
         ~Desktop();
 
         void drawPixel(Point pos);
