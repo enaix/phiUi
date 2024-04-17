@@ -5,8 +5,8 @@
 #ifndef PHIUI_COMMON_H
 #define PHIUI_COMMON_H
 
-#include "options.h"
-#include "skins/skins_common.h"
+#include "phi_options.h"
+#include "skins_common.h"
 
 #include <cstdint>
 #include <climits>

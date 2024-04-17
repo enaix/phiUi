@@ -5,12 +5,12 @@
 #ifndef PHIUI_STATE_H
 #define PHIUI_STATE_H
 
-#include "common/common.h"
-#include "common/containers.h"
-#include "widgets/widgets.h"
+#include "phi_common.h"
+#include "phi_containers.h"
+#include "widgets.h"
 
 // TODO think about dynamic imports
-#include "skins/default.h"
+#include "default_skin.h"
 
 namespace phi
 {

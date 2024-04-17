@@ -2,11 +2,12 @@
 // Created by Flynn on 16.04.2024.
 //
 
+#include "custom_options.h"
 #include "phi.h"
-#include "common/common.h"
-#include "widgets/widgets.h"
+#include "phi_common.h"
+#include "widgets.h"
 
-void setup_phi(phi::Phi& phi)
+phi::Screen setup_phi(phi::Phi& phi)
 {
     //auto phi = phi::Phi();
 
@@ -31,6 +32,7 @@ void setup_phi(phi::Phi& phi)
     phi.set_root(&screen);
 
     phi.show();
+    return screen;
 }
 
 void run(phi::Phi& phi)

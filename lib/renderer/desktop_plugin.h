@@ -2,13 +2,16 @@
 // Created by Flynn on 21.02.2024.
 //
 
+#include "phi_options.h"
+
+#ifdef DESKTOP
+
 #ifndef PHIUI_DESKTOP_H
 #define PHIUI_DESKTOP_H
 
 #include <SDL.h>
 
-#include "common/options.h"
-#include "renderer/renderer_base.h"
+#include "renderer_base.h"
 
 namespace phi
 {
@@ -35,3 +38,5 @@ namespace phi
 } // phi
 
 #endif //PHIUI_DESKTOP_H
+
+#endif //DESKTOP

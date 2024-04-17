@@ -2,7 +2,11 @@
 // Created by Flynn on 21.02.2024.
 //
 
-#include "desktop.h"
+#include "phi_options.h"
+
+#ifdef DESKTOP
+
+#include "desktop_plugin.h"
 
 namespace phi
 {
@@ -91,3 +95,5 @@ namespace phi
     }
 
 } // phi
+
+#endif

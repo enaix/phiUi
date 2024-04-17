@@ -5,9 +5,9 @@
 #ifndef PHIUI_DEFAULT_H
 #define PHIUI_DEFAULT_H
 
-#include "common/common.h"
-#include "widgets/widgets.h"
-#include "skins/skins_common.h"
+#include "phi_common.h"
+#include "widgets.h"
+#include "skins_common.h"
 
 namespace phi
 {

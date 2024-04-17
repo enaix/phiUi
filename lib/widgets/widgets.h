@@ -5,10 +5,10 @@
 #ifndef PHIUI_WIDGETS_H
 #define PHIUI_WIDGETS_H
 
-#include "common/common.h"
-#include "common/containers.h"
-#include "renderer/renderer.h"
-#include "skins/skins_common.h"
+#include "phi_common.h"
+#include "phi_containers.h"
+#include "phi_renderer.h"
+#include "skins_common.h"
 
 namespace phi
 {

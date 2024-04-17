@@ -2,9 +2,6 @@
 // Created by Flynn on 24.02.2024.
 //
 
-#ifndef PHIUI_OPTIONS_H
-#define PHIUI_OPTIONS_H
-
 // Defining default compilation options and conditional stuff
 
 
@@ -87,4 +84,3 @@ class Desktop;
 
 #endif
 
-#endif //PHIUI_OPTIONS_H

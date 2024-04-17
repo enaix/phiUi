@@ -6,13 +6,25 @@ set(CMAKE_CXX_STANDARD 23)
 
 project(phi_desktop)
 
-file(GLOB_RECURSE PHI_FILES include/*.h include/*.cpp)
-
-add_executable(phi_desktop src/desktop_test.cpp ${PHI_FILES})
+file(GLOB_RECURSE PHI_FILES lib/*.h lib/*.cpp src/*.h)
 
 message("${PHI_FILES}")
 
-include_directories(include)
+SET(libdir ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
+FILE(GLOB children RELATIVE ${libdir} ${libdir}/*)
+SET(PHI_INCL_DIRS "")
+FOREACH(child ${children})
+    IF(IS_DIRECTORY ${libdir}/${child})
+        LIST(APPEND PHI_INCL_DIRS ${libdir}/${child})
+    ENDIF()
+ENDFOREACH()
+
+message("${PHI_INCL_DIRS}")
+
+include_directories(${PHI_INCL_DIRS} src)
+
+add_executable(phi_desktop src/desktop_test.cpp src/custom_options.h ${PHI_FILES})
 
 # Configuring Phi
 # ===============

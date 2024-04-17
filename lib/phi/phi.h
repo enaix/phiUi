@@ -5,11 +5,11 @@
 #ifndef PHIUI_PHI_H
 #define PHIUI_PHI_H
 
-#include "renderer/renderer.h"
+#include "phi_renderer.h"
 
-#include "common/common.h"
-#include "widgets/widgets.h"
-#include "state/state.h"
+#include "phi_common.h"
+#include "widgets.h"
+#include "state.h"
 
 namespace phi
 {
