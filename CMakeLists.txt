@@ -24,7 +24,9 @@ message("${PHI_INCL_DIRS}")
 
 include_directories(${PHI_INCL_DIRS} src)
 
-add_executable(phi_desktop src/desktop_test.cpp src/custom_options.h ${PHI_FILES})
+add_executable(phi_desktop src/desktop_test.cpp ${PHI_FILES})
+
+target_compile_options(phi_desktop PUBLIC -include custom_options.h)
 
 # Configuring Phi
 # ===============
@@ -33,7 +35,7 @@ add_executable(phi_desktop src/desktop_test.cpp src/custom_options.h ${PHI_FILES
 add_definitions(-DDESKTOP -DMONOCHROME)
 
 # We set resolution to 128x64
-add_definitions(-DDISPLAY_WIDTH=128 -DDISPLAY_HEIGHT=64)
+#add_definitions(-DDISPLAY_WIDTH=128 -DDISPLAY_HEIGHT=64)
 
 # ===============
 

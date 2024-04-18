@@ -16,7 +16,7 @@ namespace phi
         SDL_Init(SDL_INIT_VIDEO);
         //SDL_CreateWindowAndRenderer(_res.x, _res.y, 0, &window, &renderer);
 
-        window = SDL_CreateWindow("phi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _res.x * 5, _res.y * 5, 0);
+        window = SDL_CreateWindow("phi", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _res.x * DESKTOP_SCALING, _res.y * DESKTOP_SCALING, 0);
         renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
         SDL_RenderSetLogicalSize(renderer, _res.x, _res.y);

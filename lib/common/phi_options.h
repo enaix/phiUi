@@ -78,6 +78,10 @@ class Desktop;
 #unset RENDERER_PAGE_BUFFER
 #endif
 
+#ifndef DESKTOP_SCALING
+#define DESKTOP_SCALING 5
+#endif
+
 #else
 
 #error "No framework has been selected. Please define renderer macro"
