@@ -130,7 +130,6 @@ namespace phi
         constexpr Base() {};
         Flag flags = Flag(WidgetFlags::Hidden);
         WID_TYPE("None")
-        WID_NAME
     };
 
     // Check if the flag is present

@@ -43,11 +43,8 @@ namespace phi
         //static constexpr char* str() {return STR.str;}
     };
 
-    #define WID_NAME_MAX 32
-
     // ID macro that defines the widget type string
     #define WID_TYPE(x) static constexpr char type[] = x;
-    #define WID_NAME static char name[WID_NAME_MAX];
 
     constexpr bool compare(char const* lhs, char const* rhs)
     {

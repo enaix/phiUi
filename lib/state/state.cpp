@@ -33,7 +33,7 @@ namespace phi
     template<class Wid>
     void State::draw_wid(Wid* wid, RENDERER_TYPE* render)
     {
-        constexpr WidType<Wid::type> type;
+        constexpr WidType<ConstStr<sizeof(Wid::type)>(Wid::type)> type;
         //constexpr WidName<Wid::name> name;
 
         if (wid->draw)

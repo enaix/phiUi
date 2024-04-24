@@ -29,9 +29,9 @@
 
 // Display pins (u8g2 configuration)
 #ifndef U8G2_PINS
-#define DISPLAY_CS 15
-#define DISPLAY_DC 2
-#define DISPLAY_RESET 16
+#define DISPLAY_CS 9
+#define DISPLAY_DC 10
+#define DISPLAY_RESET 13
 #define U8G2_PINS U8G2_R0, DISPLAY_CS, DISPLAY_DC, DISPLAY_RESET
 #endif
 

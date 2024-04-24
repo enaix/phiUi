@@ -32,6 +32,13 @@
 #define INLINE_SM inline
 #endif
 
+// TEMPLATE NAME SOLVER PARAMS
+// ===========================
+
+#ifndef NS_MAX_WIDGET_LEN
+#define NS_MAX_WIDGET_LEN 32
+#endif
+
 
 // GENERATED PARAMETERS
 // ====================

@@ -68,7 +68,7 @@ namespace phi
         Padding padding;
 
         WID_TYPE("BaseScreen")
-        WID_NAME
+        //WID_NAME
         friend State;
     protected:
         bool is_init;
